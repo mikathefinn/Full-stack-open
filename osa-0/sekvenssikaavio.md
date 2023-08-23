@@ -1,10 +1,7 @@
 <!--
 Tee vastaavanlainen kaavio, joka kuvaa, mitä tapahtuu tilanteessa, jossa käyttäjä luo uuden muistiinpanon ollessaan sivulla https://studies.cs.helsinki.fi/exampleapp/notes eli kirjoittaa tekstikenttään jotain ja painaa nappia tallenna.
 
- GET https://studies.cs.helsinki.fi/exampleapp/notes
-    GET https://studies.cs.helsinki.fi/exampleapp/main.css
-    GET https://studies.cs.helsinki.fi/exampleapp/main.js
-    GET https://studies.cs.helsinki.fi/exampleapp/data.json
+
 -->
 
 ```mermaid
@@ -12,7 +9,12 @@ sequenceDiagram
     participant browser
     participant server
 
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    GET https://studies.cs.helsinki.fi/exampleapp/notes
+    GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    GET https://studies.cs.helsinki.fi/exampleapp/data.json
+
     activate server
     server-->>browser: HTML document
     deactivate server
