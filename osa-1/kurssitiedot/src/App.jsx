@@ -14,28 +14,34 @@ const App = () => {
       </>
     );
   };
-  const Content = () => {
+
+  const Part = (props) => {
+    console.log(props);
     return (
       <>
         <p>
-          {part1}
-          {exercises1}
-        </p>
-        <p>
-          {part2}
-          {exercises2}
-        </p>
-        <p>
-          {part3}
-          {exercises3}
+          {props.part}
+          {props.exc}
         </p>
       </>
     );
   };
+  const Content = () => {
+    return (
+      <>
+        <Part part={part1} exc={exercises1} />
+        <Part part={part2} exc={exercises2} />
+        <Part part={part3} exc={exercises3} />
+      </>
+    );
+  };
+
   const Total = () => {
-    <>
-      <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
-    </>;
+    return (
+      <>
+        <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
+      </>
+    );
   };
 
   return (
