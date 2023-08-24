@@ -7,18 +7,36 @@ const App = () => {
   const part3 = 'State of a component';
   const exercises3 = 14;
 
+  const Header = () => {
+    return (
+      <>
+        <h1>{course}</h1>
+      </>
+    );
+  };
+  const Content = () => {
+    return (
+      <>
+        <p>
+          {part1}
+          {exercises1}
+        </p>
+        <p>
+          {part2}
+          {exercises2}
+        </p>
+        <p>
+          {part3}
+          {exercises3}
+        </p>
+      </>
+    );
+  };
+
   return (
     <div>
-      <h1>{course}</h1>
-      <p>
-        {part1} {exercises1}
-      </p>
-      <p>
-        {part2} {exercises2}
-      </p>
-      <p>
-        {part3} {exercises3}
-      </p>
+      <Header />
+      <Content />
       <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
     </div>
   );
