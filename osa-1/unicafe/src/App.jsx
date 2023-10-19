@@ -18,28 +18,21 @@ const App = () => {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
-  const [reviews, setReviews] = useState({ good: 0, neutral: 0, bad: 0 });
+  const total = good + bad + neutral;
+  const average = (good - bad) / total;
+  const positive = (good/total)*100
 
   const handleGoodClick = () => {
-    console.log('good clicked, value before', reviews);
-    setReviews({ ...reviews, good: reviews.good + 1 });
-    const updatedGood = good + 1;
-    setGood(updatedGood);
-    console.log('updated good', updatedGood);
+    console.log('good clicked, value before', good);
+    setGood(good + 1);
   };
   const handleBadClick = () => {
-    console.log('bad clicked, value before', reviews);
-    setReviews({ ...reviews, bad: reviews.bad + 1 });
-    const updatedBad = bad + 1;
-    setBad(updatedBad);
-    console.log('updated bad', updatedBad);
+    console.log('bad clicked, value before', bad);
+    setBad(bad + 1);
   };
   const handleNeutralClick = () => {
-    console.log('good clicked, value before', reviews);
-    setReviews({ ...reviews, neutral: reviews.neutral + 1 });
-    const updatedNeutral = neutral + 1;
-    setNeutral(updatedNeutral);
-    console.log('updated neutral', updatedNeutral);
+    console.log('good clicked, value before', neutral);
+    setNeutral(neutral + 1);
   };
 
   return (
@@ -53,6 +46,9 @@ const App = () => {
       <Result text="good: " result={good} />
       <Result text="bad: " result={bad} />
       <Result text="neutral: " result={neutral} />
+      <Result text="total: " result={total} />
+      <Result text="average: " result={average} /> 
+      <Result text="positive: " result={positive + ' %'} /> 
     </div>
   );
 };
