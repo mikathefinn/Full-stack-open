@@ -14,17 +14,24 @@ const Result = (props) => {
   );
 };
 const Statistics = ({ good, bad, neutral, total, average, positive }) => {
-  return <>
-  
-  <Header text="statistics" />;
-  {/* Also possible, <Result text='good' result={props.good} */}
-  <Result text="good: " result={good} />
-  <Result text="bad: " result={bad} />
-  <Result text="neutral: " result={neutral} />
-  <Result text="total: " result={total} />
-  <Result text="average: " result={average} /> 
-  <Result text="positive: " result={positive + ' %'} />  
-</>
+  if (total === 0)
+    return (
+      <div>
+        <Header text="No feedback given" />
+      </div>
+    );
+  return (
+    <>
+      <Header text="statistics" />
+      {/* Also possible, <Result text='good' result={props.good} */}
+      <Result text="good: " result={good} />
+      <Result text="bad: " result={bad} />
+      <Result text="neutral: " result={neutral} />
+      <Result text="total: " result={total} />
+      <Result text="average: " result={average} />
+      <Result text="positive: " result={positive + ' %'} />
+    </>
+  );
 };
 
 const App = () => {
@@ -56,7 +63,14 @@ const App = () => {
       <Button handleClick={handleBadClick} text="bad" />
       <Button handleClick={handleNeutralClick} text="neutral" />
 
-      <Statistics good={good} bad={bad} neutral={neutral} total= {total} average={average} positive={positive}/>
+      <Statistics
+        good={good}
+        bad={bad}
+        neutral={neutral}
+        total={total}
+        average={average}
+        positive={positive}
+      />
     </div>
   );
 };
