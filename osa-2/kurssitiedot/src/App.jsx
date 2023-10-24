@@ -13,12 +13,14 @@ const Part = ({ part }) => {
 const Total = ({ parts }) => {
   console.log({ parts });
 
-  let sum = 0;
+  // let sum = 0;
 
-  for (const part of parts) {
-    sum += part.exercises;
-  }
-
+  // for (const part of parts) {
+  //   sum += part.exercises;
+  // }
+const sum = parts.reduce((total, part) => total+part.exercises, 0)
+// total = accumulator, part = currentValua
+// 0 is the initial value for the accumulator
   return <p>total number of exercises is {sum}</p>;
 };
 
