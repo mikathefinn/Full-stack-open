@@ -1,8 +1,25 @@
 const Header = ({ name }) => {
   return <h1>{name}</h1>;
 };
+
 const Part = ({ part }) => {
-  return <p>{part.name} {part.exercises}</p>
+  return (
+    <p>
+      {part.name} {part.exercises}
+    </p>
+  );
+};
+
+const Total = ({ parts }) => {
+  console.log({ parts });
+
+  let sum = 0;
+
+  for (const part of parts) {
+    sum += part.exercises;
+  }
+
+  return <p>total number of exercises is {sum}</p>;
 };
 
 const Course = ({ course }) => {
@@ -10,9 +27,11 @@ const Course = ({ course }) => {
   return (
     <div>
       <Header name={course.name} />
+
       {course.parts.map((part) => (
         <Part key={part.id} part={part} />
       ))}
+      <Total parts={course.parts} />
     </div>
   );
 };
