@@ -1,8 +1,8 @@
 const Person = ({ persons }) => {
     return (
       <div>
-        {persons.map((person) => (
-          <p key={person.name}>{person.name}</p>
+        {persons.map((person, index) => (
+          <p key={index}>{person.name}</p>
           // HAS TO BE MAPPED TO PRING IT OUT
         ))}
       </div>
