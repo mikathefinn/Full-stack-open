@@ -26,29 +26,35 @@ const App = () => {
     if (alreadyExists) {
       alert(`The name ${newName} has already been added to the phonebook`);
     } else {
+      // If the name doesn't exist, create a new person object and update the state
       const personObj = {
         name: newName,
         number: newNumber,
       };
-      setPersons(persons.concat(personObj));
+      contactService.create(personObj).then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
+      });
       setNewName('');
       setNewNumber('');
     }
   };
 
+  //functions for form input changes
   const handleNameChange = (event) => {
-    console.log(event.target.value);
     setNewName(event.target.value);
   };
   const handleNumberChange = (event) => {
     setNewNumber(event.target.value);
   };
+
+  //set filter to whatever is in the filter form
   const handleFiltering = (event) => {
     setFilter(event.target.value);
   };
   const filteredNames = persons.filter((person) =>
     person.name.toLowerCase().includes(filter.toLowerCase())
   );
+
   const handleDeleteClick = (id) => {
     console.log(id);
     const contactToDelete = persons.find((person) => person.id === id);

@@ -1,3 +1,14 @@
 {
-  "persons": []
+  "persons": [
+    {
+      "name": "John BigD",
+      "number": "12344-4453",
+      "id": 1
+    },
+    {
+      "name": "Silly Hoe",
+      "number": "555-6969",
+      "id": 2
+    }
+  ]
 }
