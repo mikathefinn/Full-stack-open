@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios'
+import axios from 'axios';
 import Person from './components/Person';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
-import contactService from './services/contacts'
+import contactService from './services/contacts';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,15 +11,11 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
   const [filter, setFilter] = useState('');
 
-useEffect(()=>{
-  contactService
-  .getContacts()
-  .then(initialContacts=>{
-    setPersons(initialContacts)
-  })
-   
-}, [])
-
+  useEffect(() => {
+    contactService.getContacts().then((initialContacts) => {
+      setPersons(initialContacts);
+    });
+  }, []);
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -53,7 +49,18 @@ useEffect(()=>{
   const filteredNames = persons.filter((person) =>
     person.name.toLowerCase().includes(filter.toLowerCase())
   );
-  console.log(filteredNames);
+  const handleDeleteClick = (id) => {
+    console.log(id);
+    const contactToDelete = persons.find((person) => person.id === id);
+    contactService
+      .deleteContact(id)
+      .then(() => {
+        setPersons(persons.filter((person) => person.id !== id));
+      })
+      .catch((error) => {
+        console.error('Error deleting person:', error);
+      });
+  };
 
   return (
     <div>
@@ -70,7 +77,7 @@ useEffect(()=>{
       />
 
       <h2>Numbers</h2>
-      <Person persons={filteredNames} />
+      <Person persons={filteredNames} handleDeleteClick={handleDeleteClick} />
     </div>
   );
 };

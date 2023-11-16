@@ -1,11 +1,18 @@
-const Person = ({ persons }) => {
-    return (
-      <div>
-        {persons.map((person, index) => (
-          <p key={index}>{person.name} {person.number}</p>
-          // HAS TO BE MAPPED TO PRING IT OUT
-        ))}
-      </div>
-    );
-  };
+const Person = ({ persons, handleDeleteClick }) => {
+  return (
+    <>
+      {persons.map((person) => (
+        <div className="contact" key={person.id}>
+          <p>
+            {person.name} {person.number}
+          </p>
+          <button onClick={() => handleDeleteClick(person.id)}>
+            Delete contact
+          </button>
+        </div>
+      ))}
+    </>
+  );
+};
+
 export default Person;

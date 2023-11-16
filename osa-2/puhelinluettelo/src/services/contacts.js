@@ -5,4 +5,12 @@ const getContacts = () => {
   const request = axios.get(baseUrl);
   return request.then((res) => res.data);
 };
-export default { getContacts };
+
+const deleteContact = (id) => {
+  return axios.delete(`${baseUrl}/${id}`).then((res) => {
+    console.log('Delete successful');
+    return res.data; // You can return data if needed
+  });
+};
+
+export default { getContacts, deleteContact };

@@ -36,6 +36,14 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
+.contact {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.contact button {
+  margin: 0 0 0 3rem;
+}
 
 button {
   margin-top: 2rem;
