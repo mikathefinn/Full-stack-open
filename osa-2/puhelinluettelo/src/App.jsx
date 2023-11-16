@@ -3,6 +3,8 @@ import axios from 'axios'
 import Person from './components/Person';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
+import contactService from './services/contacts'
+
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
@@ -10,11 +12,12 @@ const App = () => {
   const [filter, setFilter] = useState('');
 
 useEffect(()=>{
-  axios.get('http://localhost:3001/persons')
-  .then((res)=>{
-    console.log('promise resolved', res);
-    setPersons(res.data)
+  contactService
+  .getContacts()
+  .then(initialContacts=>{
+    setPersons(initialContacts)
   })
+   
 }, [])
 
 
