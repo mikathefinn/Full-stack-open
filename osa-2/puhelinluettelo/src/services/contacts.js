@@ -12,7 +12,6 @@ const create = (newContact) => {
 
 const deleteContact = (id) => {
   return axios.delete(`${baseUrl}/${id}`).then((res) => {
-    console.log('Delete successful');
     return res.data;
   });
 };

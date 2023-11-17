@@ -6,7 +6,7 @@ const Person = ({ persons, handleDeleteClick }) => {
           <p>
             {person.name} {person.number}
           </p>
-          <button onClick={() => handleDeleteClick(person.id)}>
+          <button onClick={() => handleDeleteClick(person)}>
             Delete contact
           </button>
         </div>

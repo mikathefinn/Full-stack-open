@@ -20,9 +20,8 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault();
 
-    const alreadyExists = persons.some((person) => person.name === newName);
-    console.log(alreadyExists);
-
+    // some stops iterating the array when it finds the first match
+    const alreadyExists = persons.some((person) => person.name.toLowerCase() === newName.toLocaleLowerCase());
     if (alreadyExists) {
       alert(`The name ${newName} has already been added to the phonebook`);
     } else {
@@ -31,9 +30,17 @@ const App = () => {
         name: newName,
         number: newNumber,
       };
-      contactService.create(personObj).then((returnedPerson) => {
-        setPersons(persons.concat(returnedPerson));
-      });
+      //use service to create a new person object in database
+      contactService
+        .create(personObj)
+        .then((returnedPerson) => {
+          setPersons(persons.concat(returnedPerson));
+        })
+        .catch((error) => {
+          console.error('Could not create a new contact', error);
+        });
+
+      //set the forms back to empty
       setNewName('');
       setNewNumber('');
     }
@@ -55,18 +62,19 @@ const App = () => {
     person.name.toLowerCase().includes(filter.toLowerCase())
   );
 
-  const handleDeleteClick = (id) => {
-    console.log(id);
-    const contactToDelete = persons.find((person) => person.id === id);
+  const handleDeleteClick = (person) => {
+    console.log(person.id);
+    if(window.confirm(`Delete ${person.name}?`)){
     contactService
-      .deleteContact(id)
+      .deleteContact(person.id)
       .then(() => {
-        setPersons(persons.filter((person) => person.id !== id));
+        setPersons(persons.filter((p) => p.id !== person.id));
       })
       .catch((error) => {
         console.error('Error deleting person:', error);
       });
-  };
+    }
+    };
 
   return (
     <div>
