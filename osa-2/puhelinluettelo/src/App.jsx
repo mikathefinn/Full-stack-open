@@ -3,13 +3,16 @@ import axios from 'axios';
 import Person from './components/Person';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
+import Notification from './components/Notification';
 import contactService from './services/contacts';
+import './index.css';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [filter, setFilter] = useState('');
+  const [notification, setNotification] = useState('');
 
   useEffect(() => {
     contactService.getContacts().then((initialContacts) => {
@@ -17,10 +20,19 @@ const App = () => {
     });
   }, []);
 
+  const added = (name) => {
+    setNotification(name + ' was added succesfully');
+  };
+  const deleted = (name) => {
+    setNotification(name + ' was deleted succesfully!');
+  };
+  const updated = (name) => {
+    setNotification(name + "'s number was updated succesfully");
+  };
+
   const addPerson = (event) => {
     event.preventDefault();
 
-    // 
     const alreadyExists = persons.find(
       (person) => person.name.toLowerCase() === newName.toLocaleLowerCase()
     );
@@ -32,9 +44,8 @@ const App = () => {
           window.confirm(
             `Update the number for ${alreadyExists.name} to ${newNumber}`
           )
-        ) 
-        // use service to update JUST the number
-        {
+        ) {
+          // use service to update JUST the number
           contactService
             .update(alreadyExists.id, { ...alreadyExists, number: newNumber })
             .then((updatedPerson) => {
@@ -43,6 +54,7 @@ const App = () => {
                   person.id === updatedPerson.id ? updatedPerson : person
                 )
               );
+              updated(updatedPerson.name);
             })
             .catch((error) => {
               console.error('Could not update', error);
@@ -50,7 +62,7 @@ const App = () => {
         }
       } else {
         //Number is the same, name is the same
-        alert(`${newName} is already in the phonebook with the same number`)
+        alert(`${newName} is already in the phonebook with the same number`);
       }
     } else {
       // If the name doesn't exist, create a new person object and update the state
@@ -63,6 +75,7 @@ const App = () => {
         .create(personObj)
         .then((returnedPerson) => {
           setPersons(persons.concat(returnedPerson));
+          added(returnedPerson.name);
         })
         .catch((error) => {
           console.error('Could not create a new contact', error);
@@ -97,6 +110,7 @@ const App = () => {
         .deleteContact(person.id)
         .then(() => {
           setPersons(persons.filter((p) => p.id !== person.id));
+          deleted(person.name)
         })
         .catch((error) => {
           console.error('Error deleting person:', error);
@@ -107,6 +121,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notification} />
       <Filter filter={filter} handleFiltering={handleFiltering} />
 
       <h2>Add a new</h2>
