@@ -91,7 +91,7 @@ const App = () => {
       />
 
       <h2>Numbers</h2>
-      <Person persons={filteredNames} handleDeleteClick={handleDeleteClick} />
+      <Person persons={filteredNames} remove={handleDeleteClick} />
     </div>
   );
 };
