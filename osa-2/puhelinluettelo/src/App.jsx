@@ -20,10 +20,38 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault();
 
-    // some stops iterating the array when it finds the first match
-    const alreadyExists = persons.some((person) => person.name.toLowerCase() === newName.toLocaleLowerCase());
+    // 
+    const alreadyExists = persons.find(
+      (person) => person.name.toLowerCase() === newName.toLocaleLowerCase()
+    );
     if (alreadyExists) {
-      alert(`The name ${newName} has already been added to the phonebook`);
+      // if alreeadyExists, check if the number exists
+      if (alreadyExists.number !== newNumber) {
+        // If not the same number, should it be updated?
+        if (
+          window.confirm(
+            `Update the number for ${alreadyExists.name} to ${newNumber}`
+          )
+        ) 
+        // use service to update JUST the number
+        {
+          contactService
+            .update(alreadyExists.id, { ...alreadyExists, number: newNumber })
+            .then((updatedPerson) => {
+              setPersons(
+                persons.map((person) =>
+                  person.id === updatedPerson.id ? updatedPerson : person
+                )
+              );
+            })
+            .catch((error) => {
+              console.error('Could not update', error);
+            });
+        }
+      } else {
+        //Number is the same, name is the same
+        alert(`${newName} is already in the phonebook with the same number`)
+      }
     } else {
       // If the name doesn't exist, create a new person object and update the state
       const personObj = {
@@ -64,17 +92,17 @@ const App = () => {
 
   const handleDeleteClick = (person) => {
     console.log(person.id);
-    if(window.confirm(`Delete ${person.name}?`)){
-    contactService
-      .deleteContact(person.id)
-      .then(() => {
-        setPersons(persons.filter((p) => p.id !== person.id));
-      })
-      .catch((error) => {
-        console.error('Error deleting person:', error);
-      });
+    if (window.confirm(`Delete ${person.name}?`)) {
+      contactService
+        .deleteContact(person.id)
+        .then(() => {
+          setPersons(persons.filter((p) => p.id !== person.id));
+        })
+        .catch((error) => {
+          console.error('Error deleting person:', error);
+        });
     }
-    };
+  };
 
   return (
     <div>
