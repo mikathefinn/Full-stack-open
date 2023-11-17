@@ -20,15 +20,7 @@ const App = () => {
     });
   }, []);
 
-  const added = (name) => {
-    setNotification(name + ' was added succesfully');
-  };
-  const deleted = (name) => {
-    setNotification(name + ' was deleted succesfully!');
-  };
-  const updated = (name) => {
-    setNotification(name + "'s number was updated succesfully");
-  };
+ 
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -54,10 +46,12 @@ const App = () => {
                   person.id === updatedPerson.id ? updatedPerson : person
                 )
               );
-              updated(updatedPerson.name);
+              setNotification(updatedPerson.name + "'s number was updated succesfully");
             })
             .catch((error) => {
               console.error('Could not update', error);
+              setNotification(alreadyExists.name + ' was already removed from the server')
+              setPersons(persons.filter(p=>p.id!==person.id))
             });
         }
       } else {
@@ -75,7 +69,8 @@ const App = () => {
         .create(personObj)
         .then((returnedPerson) => {
           setPersons(persons.concat(returnedPerson));
-          added(returnedPerson.name);
+          // added(returnedPerson.name);
+          setNotification(returnedPerson.name + ' was added succsfully')
         })
         .catch((error) => {
           console.error('Could not create a new contact', error);
@@ -110,7 +105,7 @@ const App = () => {
         .deleteContact(person.id)
         .then(() => {
           setPersons(persons.filter((p) => p.id !== person.id));
-          deleted(person.name)
+          setNotification(person.name + ' was deleted succesfully!');
         })
         .catch((error) => {
           console.error('Error deleting person:', error);
